@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CallApi{
 
-  final String _url = 'http://192.168.43.115:8000/api/';
+  final String _url = 'http://192.168.49.116:8000/api/';
 
 
 

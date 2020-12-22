@@ -9,6 +9,7 @@ import 'package:virque/users.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'editProfile.dart';
+import 'maps/map2.dart';
 
 class requestPage extends StatefulWidget {
   @override
@@ -66,7 +67,7 @@ class _requestPageState extends State<requestPage> {
                     child: Text("Request Turn no.", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
                     onPressed: () async {
                       Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (BuildContext ctx) => MapView()));
+                          MaterialPageRoute(builder: (BuildContext ctx) => MapView2()));
                     },
                   ),
                   Center(
