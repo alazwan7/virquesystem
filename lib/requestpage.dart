@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 import "package:virque/api.dart";
 import 'package:virque/maps/maps.dart';
+import 'package:virque/request/requestLocation.dart';
 import 'package:virque/users.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -67,7 +68,7 @@ class _requestPageState extends State<requestPage> {
                     child: Text("Request Turn no.", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
                     onPressed: () async {
                       Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (BuildContext ctx) => MapView2()));
+                          MaterialPageRoute(builder: (BuildContext ctx) => requestPage2()));
                     },
                   ),
                   Center(
