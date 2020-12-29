@@ -4,8 +4,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 import 'dart:convert';
 import "package:virque/api.dart";
+import 'package:virque/maps/geolocator.dart';
+import 'package:virque/maps/geolocator1.dart';
 import 'package:virque/maps/maps.dart';
 import 'package:virque/request/requestLocation.dart';
+import 'package:virque/request/requirementRequest.dart';
 import 'package:virque/users.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,22 +22,6 @@ class requestPage extends StatefulWidget {
 
 // ignore: camel_case_types
 class _requestPageState extends State<requestPage> {
-  Completer<GoogleMapController> _controller = Completer();
-
-  static final CameraPosition _kGooglePlex = CameraPosition(
-//    target: LatLng(37.42796133580664, -122.085749655962),
-    target: LatLng(2.144460, 102.427090),
-    zoom: 14.4746,
-  );
-
-
-  static final CameraPosition _kBank = CameraPosition(
-      bearing: 192.8334901395799,
-//      target: LatLng(37.43296265331129, -122.08832357078792),
-      target: LatLng(2.144460, 102.427090),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
 
   var currentUser;
   @override
@@ -49,60 +36,136 @@ class _requestPageState extends State<requestPage> {
     return Scaffold(
           appBar: new AppBar(
             title: new Text(
-              "Request Now",
+              "Detail Request",
               style: new TextStyle(color: Colors.white, fontSize: 30, fontFamily: ''),
             ),
             centerTitle: true,
             backgroundColor: Colors.black,
           ),
-          body: Center(
-              child: Column(
-                children: <Widget>[
-                  Text(currentUser!=null ? currentUser.name : ""),
-                  Text(currentUser!=null ? currentUser.email  : ""),
-                  Text(currentUser!=null ? currentUser.fullname  : ""),
-                  Text(currentUser!=null ? currentUser.phoneno  : ""),
+          body: Container(
+            decoration: new BoxDecoration(
+              color: Colors.blue.withOpacity(0.25),
+
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Container(
+
+                decoration: new BoxDecoration(
+                    color: Colors.grey.withOpacity(0.25),
+                    borderRadius: new BorderRadius.only(
+                      topLeft: const Radius.circular(20.0),
+                      topRight: const Radius.circular(20.0),
+                      bottomLeft: const Radius.circular(20.0),
+                      bottomRight: const Radius.circular(20.0),
+                    )
+                ),
+                  child: Center(
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                                color: Colors.blue.withOpacity(0.25),
+                                borderRadius: new BorderRadius.only(
+                                  topLeft: const Radius.circular(20.0),
+                                  topRight: const Radius.circular(20.0),
+                                  bottomLeft: const Radius.circular(20.0),
+                                  bottomRight: const Radius.circular(20.0),
+                                )
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Text("Name:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                                        Text(currentUser!=null ? currentUser.name : "", textAlign: TextAlign.center,
+                                          style: new TextStyle(color: Colors.black, fontSize: 15, fontFamily: ''),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
 
 
-                  FlatButton(
-                    child: Text("Request Turn no.", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
-                    onPressed: () async {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (BuildContext ctx) => requestPage2()));
-                    },
-                  ),
-                  Center(
-                    child: Container(
-                      margin: const EdgeInsets.all(10.0),
-                      color: Colors.amber[600],
-                      width: 300.0,
-                      height: 400.0,
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Text("Username:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                                        Text(currentUser!=null ? currentUser.email  : "", textAlign: TextAlign.center,
+                                          style: new TextStyle(color: Colors.black, fontSize: 15, fontFamily: ''),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
 
-                      child: Scaffold(
-                        body: Stack(
-                          children: <Widget>[
-                            // TODO: Add Map View
-                            GoogleMap(
-                              mapType: MapType.hybrid,
-                              initialCameraPosition: _kGooglePlex,
-                              onMapCreated: (GoogleMapController controller) {
-                                _controller.complete(controller);
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Text("Fullname:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                                        Text(currentUser!=null ? currentUser.fullname  : "", textAlign: TextAlign.center,
+                                          style: new TextStyle(color: Colors.black, fontSize: 15, fontFamily: ''),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Text("Phone No:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                                        Text(currentUser!=null ? currentUser.phoneno  : "", textAlign: TextAlign.center,
+                                          style: new TextStyle(color: Colors.black, fontSize: 15, fontFamily: ''),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+
+
+
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                                color: Colors.blueGrey.withOpacity(0.25),
+                                borderRadius: new BorderRadius.only(
+                                  topLeft: const Radius.circular(10.0),
+                                  topRight: const Radius.circular(10.0),
+                                  bottomLeft: const Radius.circular(10.0),
+                                  bottomRight: const Radius.circular(10.0),
+                                )
+                            ),
+                            child: FlatButton(
+                              child: Text("Request Ticket", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
+                              onPressed: () async {
+                                Navigator.pushReplacement(context,
+                                    MaterialPageRoute(builder: (BuildContext ctx) => requirementPage()));
                               },
                             ),
-
-                            FloatingActionButton.extended(
-                              onPressed: _goToTheBank,
-                              label: Text('To the Bank!'),
-                              icon: Icon(Icons.apartment_rounded),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
 
-                    ),
-                  )
-                ],
-              )
+                      ],
+                    )
+                ),
+              ),
+            ),
           )
         // By default, show a loading spinner.
       );
@@ -132,9 +195,5 @@ class _requestPageState extends State<requestPage> {
     }
   }
 
-  Future<void> _goToTheBank() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kBank));
-  }
 }
 

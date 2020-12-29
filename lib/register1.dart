@@ -121,7 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextFormField(
                      style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
                         decoration: InputDecoration(
-                            labelText: 'Username*', hintText: "Ali",),
+                            labelText: 'Username*', hintText: "Ali"),
 
                         controller: nameController,
                         // ignore: missing_return
