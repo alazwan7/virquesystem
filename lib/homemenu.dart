@@ -169,7 +169,7 @@ class homeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(70.0)),
                           elevation: 10,
                           child: Padding(padding: EdgeInsets.all(8.0),
-                            child: Image.asset("assets/images/skull.png", height: 90, width: 90),
+                            child: Image.asset("assets/images/viqueLogo.png", height: 90, width: 90),
                           ),
                         ),
                         Text('Virque', style: TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: ''),)

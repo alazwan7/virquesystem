@@ -30,6 +30,8 @@ class _requirementPageState extends State<requirementPage> {
 
   final Geolocator _geolocator = Geolocator();
 
+  TextEditingController disableController;
+
   Position _currentPosition;
   Position _destinationPosition;
   String _currentAddress;
@@ -135,7 +137,7 @@ class _requirementPageState extends State<requirementPage> {
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
-              target: LatLng(6.1991, 102.1694),
+              target: LatLng(36.114704, -115.201462),
               zoom: 18.0,
             ),
           ),
@@ -169,7 +171,7 @@ class _requirementPageState extends State<requirementPage> {
 
   _getDestinationAddress() async {
     try {
-      List<Placemark> p = await _geolocator.placemarkFromCoordinates(6.1991, 102.1694);
+      List<Placemark> p = await _geolocator.placemarkFromCoordinates(34.052235, -118.243683);
 
       Placemark place = p[0];
 
@@ -206,8 +208,8 @@ class _requirementPageState extends State<requirementPage> {
             : startPlacemark[0].position;
         Position destinationCoordinates = _destinationAddress == _thedestinationAddress
             ? Position(
-            latitude: _destinationPosition.latitude,
-            longitude: _destinationPosition.longitude)
+            latitude: 34.052235,
+            longitude:  -118.243683)
             : destinationPlacemark[0].position;
 
         // Start Location Marker
@@ -228,8 +230,7 @@ class _requirementPageState extends State<requirementPage> {
         Marker destinationMarker = Marker(
           markerId: MarkerId('$destinationCoordinates'),
           position: LatLng(
-            destinationCoordinates.latitude,
-            destinationCoordinates.longitude,
+              34.052235, -118.243683
           ),
           infoWindow: InfoWindow(
             title: 'Destination',
@@ -300,7 +301,7 @@ class _requirementPageState extends State<requirementPage> {
           );
         }
         var distanceInMeters = await
-        _geolocator.distanceBetween(_currentPosition.latitude, _currentPosition.longitude, 2.2212, 102.2501);
+        _geolocator.distanceBetween(_currentPosition.latitude, _currentPosition.longitude, 34.052235, -118.243683);
         print(distanceInMeters);
         setState(() {
           _placeDistance = (distanceInMeters/1000).toStringAsFixed(2);
@@ -355,6 +356,7 @@ class _requirementPageState extends State<requirementPage> {
   var currentUser;
   @override
   void initState() {
+    disableController = new TextEditingController();
     super.initState();
     users();
     _getCurrentLocation();
@@ -378,131 +380,373 @@ class _requirementPageState extends State<requirementPage> {
         ),
         body: Center(
             child: SingleChildScrollView(
-                child: Container(
-                  decoration: new BoxDecoration(
-                    color: Colors.blue.withOpacity(0.25),
-
-                  ),
-
-
-                  //Container Yg Ada smua wiget
-                  child: Padding(
-                    padding: const EdgeInsets.all(70.0),
-                    child: new Container(
-                        decoration: new BoxDecoration(
-                            color: Colors.grey.withOpacity(0.25),
-                            borderRadius: new BorderRadius.only(
-                              topLeft: const Radius.circular(20.0),
-                              topRight: const Radius.circular(20.0),
-                              bottomLeft: const Radius.circular(20.0),
-                              bottomRight: const Radius.circular(20.0),
-                            )
-                        ),
+                child: Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: new Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.grey.withOpacity(0.25),
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(20.0),
+                            topRight: const Radius.circular(20.0),
+                            bottomLeft: const Radius.circular(20.0),
+                            bottomRight: const Radius.circular(20.0),
+                          )
+                      ),
 
 
 
-                        child: new Center(
-                            child: Column(
+                      child: new Center(
+                          child: Column(
 
-                              children: <Widget>[
+                            children: <Widget>[
 
-                                //User Disability
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    decoration: new BoxDecoration(
-                                        color: Colors.blue.withOpacity(0.25),
-                                        borderRadius: new BorderRadius.only(
-                                          topLeft: const Radius.circular(20.0),
-                                          topRight: const Radius.circular(20.0),
-                                          bottomLeft: const Radius.circular(20.0),
-                                          bottomRight: const Radius.circular(20.0),
-                                        )
-                                    ),
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Column(
-                                          children: [
-                                            Text('Are you disable person?',
-                                              style: TextStyle(fontSize: 15), textAlign: TextAlign.center,
+                              //User Disability
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                  decoration: new BoxDecoration(
+                                      color: Colors.blue.withOpacity(0.25),
+                                      borderRadius: new BorderRadius.only(
+                                        topLeft: const Radius.circular(20.0),
+                                        topRight: const Radius.circular(20.0),
+                                        bottomLeft: const Radius.circular(20.0),
+                                        bottomRight: const Radius.circular(20.0),
+                                      )
+                                  ),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: [
+                                          Text('Are you disable person?',
+                                            style: TextStyle(fontSize: 15), textAlign: TextAlign.center,
+                                          ),
+                                          RadioButtonGroup(
+                                              labels: <String>[
+                                                "Yes",
+                                                "No",
+                                              ],
+                                              onSelected: (String value) =>
+                                              disableController.text = value
+                                          ),
+                                        ],
+                                      )
+                                  ),
+                                ),
+                              ),
+
+                              //Senior Citizen
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                  decoration: new BoxDecoration(
+                                      color: Colors.blue.withOpacity(0.25),
+                                      borderRadius: new BorderRadius.only(
+                                        topLeft: const Radius.circular(20.0),
+                                        topRight: const Radius.circular(20.0),
+                                        bottomLeft: const Radius.circular(20.0),
+                                        bottomRight: const Radius.circular(20.0),
+                                      )
+                                  ),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: [
+                                          Text('Are you senior citizen? (60 years old and above)',
+                                            style: TextStyle(fontSize: 15), textAlign: TextAlign.center,
+                                          ),
+                                          RadioButtonGroup(
+                                              labels: <String>[
+                                                "Yes",
+                                                "No",
+                                              ],
+                                              onSelected: (String selected) => print(selected)
+                                          ),
+                                        ],
+                                      )
+                                  ),
+                                ),
+                              ),
+
+
+                              Center(
+                                child: Container(
+                                  margin: const EdgeInsets.all(10.0),
+
+                                  height: 550.0,
+
+                                  child: Scaffold(
+                                    body: Stack(
+                                      children: <Widget>[
+                                        // TODO: Add Map View
+                                        GoogleMap(
+                                          markers: markers != null ? Set<Marker>.from(markers) : null,
+                                          initialCameraPosition: _initialLocation,
+                                          myLocationEnabled: true,
+                                          myLocationButtonEnabled: false,
+                                          mapType: MapType.normal,
+                                          zoomGesturesEnabled: true,
+                                          zoomControlsEnabled: false,
+                                          polylines: Set<Polyline>.of(polylines.values),
+                                          onMapCreated: (GoogleMapController controller) {
+                                            mapController = controller;
+                                          },
+                                        ),
+
+                                        // Show zoom buttons
+                                        SafeArea(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left: 10.0),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                ClipOval(
+                                                  child: Material(
+                                                    color: Colors.blue[100], // button color
+                                                    child: InkWell(
+                                                      splashColor: Colors.blue, // inkwell color
+                                                      child: SizedBox(
+                                                        width: 50,
+                                                        height: 50,
+                                                        child: Icon(Icons.add),
+                                                      ),
+                                                      onTap: () {
+                                                        mapController.animateCamera(
+                                                          CameraUpdate.zoomIn(),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(height: 20),
+                                                ClipOval(
+                                                  child: Material(
+                                                    color: Colors.blue[100], // button color
+                                                    child: InkWell(
+                                                      splashColor: Colors.blue, // inkwell color
+                                                      child: SizedBox(
+                                                        width: 50,
+                                                        height: 50,
+                                                        child: Icon(Icons.remove),
+                                                      ),
+                                                      onTap: () {
+                                                        mapController.animateCamera(
+                                                          CameraUpdate.zoomOut(),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
                                             ),
-                                            RadioButtonGroup(
-                                                labels: <String>[
-                                                  "Yes",
-                                                  "No",
+                                          ),
+                                        ),
+
+                                        SafeArea(
+                                          child: Align(
+                                            alignment: Alignment.topCenter,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(top: 10.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white70,
+                                                  borderRadius: BorderRadius.all(
+                                                    Radius.circular(20.0),
+                                                  ),
+                                                ),
+                                                width: width * 0.6,
+
+
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: <Widget>[
+                                                      Text(
+                                                        'Places',
+                                                        style: TextStyle(fontSize: 15.0),
+                                                      ),
+                                                      SizedBox(height: 5),
+                                                      _textField(
+                                                          label: 'Start',
+                                                          hint: 'Choose starting point',
+                                                          initialValue: _currentAddress,
+                                                          prefixIcon: Icon(Icons.looks_one),
+                                                          suffixIcon: IconButton(
+                                                            icon: Icon(Icons.my_location),
+                                                            onPressed: () {
+                                                              startAddressController.text = _currentAddress;
+                                                              _startAddress = _currentAddress;
+                                                            },
+                                                          ),
+                                                          controller: startAddressController,
+                                                          width: width * 0.65,
+                                                          locationCallback: (String value) {
+                                                            setState(() {
+                                                              _startAddress = value;
+                                                            });
+                                                          }),
+                                                      SizedBox(height: 10),
+                                                      _textField(
+                                                          label: 'Destination',
+                                                          hint: 'Choose destination',
+                                                          initialValue: '',
+                                                          prefixIcon: Icon(Icons.looks_two),
+                                                          suffixIcon: IconButton(
+                                                            icon: Icon(Icons.my_location),
+                                                            onPressed: () {
+                                                              destinationAddressController.text = _thedestinationAddress;
+                                                              _destinationAddress = _thedestinationAddress;
+                                                            },
+                                                          ),
+                                                          controller: destinationAddressController,
+                                                          width: width * 0.65,
+                                                          locationCallback: (String value) {
+                                                            setState(() {
+                                                              _destinationAddress = value;
+                                                            });
+                                                          }),
+                                                      SizedBox(height: 2),
+                                                      Visibility(
+                                                        visible: _placeDistance == null ? false : true,
+                                                        child: Text(
+                                                          'DISTANCE: $_placeDistance km',
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight: FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 5),
+                                                      RaisedButton(
+                                                        onPressed: (_startAddress != '' &&
+                                                            _destinationAddress != '')
+                                                            ? () async {
+                                                          setState(() {
+                                                            if (markers.isNotEmpty) markers.clear();
+                                                            if (polylines.isNotEmpty)
+                                                              polylines.clear();
+                                                            if (polylineCoordinates.isNotEmpty)
+                                                              polylineCoordinates.clear();
+                                                            _placeDistance = null;
+                                                          });
+
+                                                          _calculateDistance().then((isCalculated) {
+                                                            if (isCalculated) {
+                                                              _scaffoldKey.currentState.showSnackBar(
+                                                                SnackBar(
+                                                                  content: Text(
+                                                                      'Distance Calculated Sucessfully'),
+                                                                ),
+                                                              );
+                                                            } else {
+                                                              _scaffoldKey.currentState.showSnackBar(
+                                                                SnackBar(
+                                                                  content: Text(
+                                                                      'Error Calculating Distance'),
+                                                                ),
+                                                              );
+                                                            }
+                                                          });
+                                                        }
+                                                            : null,
+                                                        color: Colors.red,
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(20.0),
+                                                        ),
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Text(
+                                                            'Show Route'.toUpperCase(),
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 20.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        SafeArea(
+                                          child: Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(right: 10.0, bottom: 10.0),
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: <Widget>[
+                                                  ClipOval(
+                                                    child: Material(
+                                                      color: Colors.orange[100], // button color
+                                                      child: InkWell(
+                                                        splashColor: Colors.orange, // inkwell color
+                                                        child: SizedBox(
+                                                          width: 56,
+                                                          height: 56,
+                                                          child: Icon(Icons.my_location),
+                                                        ),
+                                                        onTap: () {
+                                                          mapController.animateCamera(
+                                                            CameraUpdate.newCameraPosition(
+                                                              CameraPosition(
+                                                                target: LatLng(
+                                                                  _currentPosition.latitude,
+                                                                  _currentPosition.longitude,
+                                                                ),
+                                                                zoom: 18.0,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  )
                                                 ],
-                                                onSelected: (String selected) => print(selected)
+                                              ),
                                             ),
-                                          ],
-                                        )
+                                          ),
+                                        ),
+
+                                      ],
                                     ),
                                   ),
-                                ),
 
-                                //Senior Citizen
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    decoration: new BoxDecoration(
-                                        color: Colors.blue.withOpacity(0.25),
-                                        borderRadius: new BorderRadius.only(
-                                          topLeft: const Radius.circular(20.0),
-                                          topRight: const Radius.circular(20.0),
-                                          bottomLeft: const Radius.circular(20.0),
-                                          bottomRight: const Radius.circular(20.0),
-                                        )
-                                    ),
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Column(
-                                          children: [
-                                            Text('Are you senior citizen? (60 years old and above)',
-                                              style: TextStyle(fontSize: 15), textAlign: TextAlign.center,
-                                            ),
-                                            RadioButtonGroup(
-                                                labels: <String>[
-                                                  "Yes",
-                                                  "No",
-                                                ],
-                                                onSelected: (String selected) => print(selected)
-                                            ),
-                                          ],
-                                        )
-                                    ),
+                                ),
+                              ),
+
+
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                  decoration: new BoxDecoration(
+                                      color: Colors.blueGrey.withOpacity(0.25),
+                                      borderRadius: new BorderRadius.only(
+                                        topLeft: const Radius.circular(10.0),
+                                        topRight: const Radius.circular(10.0),
+                                        bottomLeft: const Radius.circular(10.0),
+                                        bottomRight: const Radius.circular(10.0),
+                                      )
+                                  ),
+                                  child: FlatButton(
+                                    child: Text("Next", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
+                                    onPressed: () async {
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(builder: (BuildContext ctx) => requestPage4()));
+                                    },
                                   ),
                                 ),
+                              ),
+                            ],
+                          )
 
-
-
-
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Container(
-                                    decoration: new BoxDecoration(
-                                        color: Colors.blueGrey.withOpacity(0.25),
-                                        borderRadius: new BorderRadius.only(
-                                          topLeft: const Radius.circular(10.0),
-                                          topRight: const Radius.circular(10.0),
-                                          bottomLeft: const Radius.circular(10.0),
-                                          bottomRight: const Radius.circular(10.0),
-                                        )
-                                    ),
-                                    child: FlatButton(
-                                      child: Text("Submit", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
-                                      onPressed: () async {
-                                        Navigator.pushReplacement(context,
-                                            MaterialPageRoute(builder: (BuildContext ctx) => requestPage4()));
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-
-                        )
-                    ),
+                      )
                   ),
-
                 )
             )
           // By default, show a loading spinner.

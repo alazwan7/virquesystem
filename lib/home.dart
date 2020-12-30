@@ -15,8 +15,8 @@ class _WelcomePageState extends State<WelcomePage> {
         children: [
           Container(
               child: Text(
-                'Welcome Dude!!',
-                style: TextStyle(fontSize: 30.0, fontFamily: 'Nuevo'),
+                'Welcome!!',
+                style: TextStyle(fontSize: 30.0, fontFamily: ''),
               ),
           ),
         ],
@@ -29,7 +29,7 @@ class _WelcomePageState extends State<WelcomePage> {
           child: CircleAvatar(
             backgroundColor: Colors.white,
             radius: 56.0,
-            child: Image.asset('assets/images/skull.png'),
+            child: Image.asset('assets/images/viqueLogo.png'),
           )
       ),
     );
@@ -40,7 +40,7 @@ class _WelcomePageState extends State<WelcomePage> {
       child: ButtonTheme(
         height: 56,
         child: RaisedButton(
-            child: Text('Customer', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'Nuevo')),
+            child: Text('Customer', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
             color: Colors.black87,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50)
@@ -63,7 +63,7 @@ class _WelcomePageState extends State<WelcomePage> {
       child: ButtonTheme(
         height: 56,
         child: RaisedButton(
-            child: Text('Staff', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: 'Nuevo')),
+            child: Text('Staff', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
             color: Colors.black87,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50)

@@ -38,7 +38,7 @@ class DashBoardState extends State<DashBoard> {
                       borderRadius: BorderRadius.all(Radius.circular(50.0)),
                       elevation: 10,
                       child: Padding(padding: EdgeInsets.all(8.0),
-                        child: Image.asset("assets/images/skull.png", height: 90, width: 90),
+                        child: Image.asset("assets/images/viqueLogo.png", height: 90, width: 90),
                       ),
                     ),
 
