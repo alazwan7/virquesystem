@@ -31,6 +31,8 @@ class _requirementPageState extends State<requirementPage> {
   final Geolocator _geolocator = Geolocator();
 
   TextEditingController disableController;
+  TextEditingController seniorCitizenController;
+
 
   Position _currentPosition;
   Position _destinationPosition;
@@ -292,18 +294,12 @@ class _requirementPageState extends State<requirementPage> {
 
         // Calculating the total distance by adding the distance
         // between small segments
-        for (int i = 0; i < polylineCoordinates.length - 1; i++) {
-          totalDistance += _coordinateDistance(
-            polylineCoordinates[i].latitude,
-            polylineCoordinates[i].longitude,
-            polylineCoordinates[i + 1].latitude,
-            polylineCoordinates[i + 1].longitude,
-          );
-        }
+
         var distanceInMeters = await
         _geolocator.distanceBetween(_currentPosition.latitude, _currentPosition.longitude, 34.052235, -118.243683);
         print(distanceInMeters);
         setState(() {
+
           _placeDistance = (distanceInMeters/1000).toStringAsFixed(2);
           print('DISTANCE: $_placeDistance km');
         });
@@ -318,14 +314,6 @@ class _requirementPageState extends State<requirementPage> {
 
   // Formula for calculating distance between two coordinates
   // https://stackoverflow.com/a/54138876/11910277
-  double _coordinateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
-    var c = cos;
-    var a = 0.5 -
-        c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-    return 12742 * asin(sqrt(a));
-  }
 
   // Create the polylines for showing the route between two places
   _createPolylines(Position start, Position destination) async {
@@ -333,7 +321,7 @@ class _requirementPageState extends State<requirementPage> {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       API_KEY, // Google Maps API Key
       PointLatLng(start.latitude, start.longitude),
-      PointLatLng(destination.latitude, destination.longitude),
+      PointLatLng(34.052235, -118.243683),
       travelMode: TravelMode.transit,
     );
 
@@ -357,6 +345,8 @@ class _requirementPageState extends State<requirementPage> {
   @override
   void initState() {
     disableController = new TextEditingController();
+    seniorCitizenController = new TextEditingController();
+
     super.initState();
     users();
     _getCurrentLocation();
@@ -459,7 +449,8 @@ class _requirementPageState extends State<requirementPage> {
                                                 "Yes",
                                                 "No",
                                               ],
-                                              onSelected: (String selected) => print(selected)
+                                              onSelected: (String value) =>
+                                              seniorCitizenController.text = value
                                           ),
                                         ],
                                       )
