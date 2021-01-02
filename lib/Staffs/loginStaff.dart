@@ -5,13 +5,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:virque/staffdashboard.dart';
+import 'package:virque/Customers/register1.dart';
+import 'package:virque/Staffs/staffdashboard.dart';
+import 'package:virque/model/users.dart';
 
+import '../home.dart';
 
-import 'Customers/register1.dart';
-import 'api/api.dart';
-import 'home.dart';
-import 'model/users.dart';
 
 
 

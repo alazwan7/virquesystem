@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:virque/Customers/homemenu.dart';
+import 'package:virque/Customers/loginCustomer.dart';
+import 'package:virque/Customers/userprofile.dart';
 
-import 'Customers/homemenu.dart';
-import 'Customers/loginCustomer.dart';
-import 'Customers/userprofile.dart';
-import 'home.dart';
+import '../home.dart';
+
+
 
 
 
