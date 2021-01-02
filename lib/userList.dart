@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
-import "package:virque/api.dart";
+import 'file:///C:/Users/Asyraaf/AndroidStudioProjects/virque-master/lib/api/api.dart';
 
 import 'package:virque/userdashboard.dart';
 
-import 'package:virque/users.dart';
+import 'model/users.dart';
+
 class UserList extends StatefulWidget {
   @override
   _UserListState createState() => _UserListState();

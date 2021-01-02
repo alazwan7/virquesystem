@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:virque/api.dart';
 import 'package:virque/userprofile.dart';
 
-import 'package:virque/users.dart';
 import 'package:http/http.dart' as http;
+import 'api/api.dart';
 import 'loginCustomer.dart';
+import 'model/users.dart';
 
 
 

@@ -1,19 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:virque/model/users.dart';
 import 'dart:async';
 import 'dart:convert';
-import "package:virque/api.dart";
-import 'package:virque/maps/geolocator.dart';
-import 'package:virque/maps/geolocator1.dart';
-import 'package:virque/maps/maps.dart';
-import 'package:virque/request/requestLocation.dart';
+import 'file:///C:/Users/Asyraaf/AndroidStudioProjects/virque-master/lib/api/api.dart';
 import 'package:virque/request/requirementRequest.dart';
-import 'package:virque/users.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'editProfile.dart';
-import 'maps/map2.dart';
 
 class requestPage extends StatefulWidget {
   @override

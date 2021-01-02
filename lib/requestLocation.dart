@@ -8,12 +8,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'dart:async';
 import 'dart:convert';
-import "package:virque/api.dart";
-import 'package:virque/maps/map2.dart';
-import 'package:virque/maps/maps.dart';
-import 'package:virque/maps/secrets.dart';
-import 'package:virque/users.dart';
+import 'file:///C:/Users/Asyraaf/AndroidStudioProjects/virque-master/lib/api/api.dart';
+import 'package:virque/maps_api/secrets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'model/users.dart';
 
 class requestPage2 extends StatefulWidget {
   @override
