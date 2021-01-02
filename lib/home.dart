@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'loginCustomer.dart';
+import 'Customers/loginCustomer.dart';
 import 'loginStaff.dart';
 
 class WelcomePage extends StatefulWidget {

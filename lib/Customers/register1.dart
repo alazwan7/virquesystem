@@ -4,55 +4,57 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:virque/userprofile.dart';
-
 import 'package:http/http.dart' as http;
-import 'api/api.dart';
+import 'package:virque/api/api.dart';
+import 'package:virque/model/users.dart';
 import 'loginCustomer.dart';
-import 'model/users.dart';
 
 
 
 
 
-Future<Users> editUsers(String name, email, password, fullname, phoneno) async {
+
+
+Future<Users> createUsers(String name, email, password, role, fullname, icno, phoneno) async {
+
+
 
   var data={
     'name': name,
     'email' : email,
     'password' : password,
     'fullname': fullname,
+    'icno' : icno,
     'phoneno' : phoneno,
-
+    'role' : role,
   };
   var response  = await CallApi().postData(data,"users");
   print(response.statusCode);
 
+
   if (response.statusCode == 201) {
-    print("workingggg") ; } else {
+print("workingggg") ; } else {
     throw Exception('Failed to create User');
   }
 }
 
 
-class EditPage extends StatefulWidget {
-  EditPage({Key key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  RegisterPage({Key key}) : super(key: key);
 
   @override
-  _EditPageState createState() => _EditPageState();
-
+  _RegisterPageState createState() => _RegisterPageState();
 
 }
 
-class _EditPageState extends State<EditPage> {
+class _RegisterPageState extends State<RegisterPage> {
 
-  var currentUser;
 
   var items = ['Customer'];
 
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
   TextEditingController nameController;
+
   TextEditingController emailController;
   TextEditingController pwdController;
   TextEditingController confirmPwdInputController;
@@ -68,7 +70,6 @@ class _EditPageState extends State<EditPage> {
 
   @override
   initState() {
-    super.initState();
     nameController = new TextEditingController();
     emailController = new TextEditingController();
     pwdController = new TextEditingController();
@@ -76,17 +77,11 @@ class _EditPageState extends State<EditPage> {
     fullnameController = new TextEditingController();
     icnoController = new TextEditingController();
     phonenoController = new TextEditingController();
+
     roleController = new TextEditingController();
-    getUserData();
-
+    super.initState();
   }
 
-  void getUserData() async{
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    setState(() {
-      currentUser= pref.getString("id");
-    });
-  }
   String emailValidator(String value) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -112,18 +107,8 @@ class _EditPageState extends State<EditPage> {
         appBar: AppBar(
           centerTitle: true,
           title: Text("Register", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: '')),
+
           backgroundColor: Colors.black,
-          leading: GestureDetector(
-            onTap: () async {
-              Navigator.pop(context);
-              Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => new UserProfile())
-              );
-            },
-            child: Icon(
-              Icons.arrow_back,  // add custom icons also
-            ),
-          ),
         ),
         body: Container(
             padding: const EdgeInsets.all(20.0),
@@ -134,20 +119,23 @@ class _EditPageState extends State<EditPage> {
                   child: Column(
                     children: <Widget> [
                       TextFormField(
-                        style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
+                     style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
                         decoration: InputDecoration(
-                          labelText: 'Username*', hintText: "Ali",),
+                            labelText: 'Username*', hintText: "Ali"),
+
                         controller: nameController,
                         // ignore: missing_return
                         validator: (value) {
-                          if (value.length < 3) {
-                            return "Please enter a valid username.";
+                          if (value.isEmpty) {
+
+                            return "Please fill the form.";
                           }
                         },
                       ),
 
                       TextFormField(
-                        style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
+                          style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
+
                         decoration: InputDecoration(
                             labelText: 'Email*', hintText: "Ali.97@gmail.com"),
                         controller: emailController,
@@ -156,7 +144,7 @@ class _EditPageState extends State<EditPage> {
                       ),
 
                       TextFormField(
-                        style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
+                          style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
                         decoration: InputDecoration(
                             labelText: 'Password*', hintText: "********"),
                         controller: pwdController,
@@ -164,6 +152,15 @@ class _EditPageState extends State<EditPage> {
                         validator: pwdValidator,
                       ),
 
+                      TextFormField(
+                          style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
+
+                        decoration: InputDecoration(
+                            labelText: 'Confirm Password*', hintText: "********"),
+                        controller: confirmPwdInputController,
+                        obscureText: true,
+                        validator: pwdValidator,
+                      ),
 
                       TextFormField(
                           style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
@@ -172,12 +169,22 @@ class _EditPageState extends State<EditPage> {
                           controller: fullnameController,
                           // ignore: missing_return
                           validator: (value) {
-                            if (value.length < 3) {
-                              return "Please enter a valid fullname.";
+                            if (value.isEmpty) {
+                              return "Please fill the form.";
                             }
                           }),
 
-
+                      TextFormField(
+                          style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
+                          decoration: InputDecoration(
+                              labelText: 'NRIC No.*', hintText: "97060503XXXX"),
+                          controller: icnoController,
+                          // ignore: missing_return
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Please fill the form.";
+                            }
+                          }),
 
                       TextFormField(
                           style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: ''),
@@ -186,25 +193,70 @@ class _EditPageState extends State<EditPage> {
                           controller: phonenoController,
                           // ignore: missing_return
                           validator: (value) {
-                            if (value.length < 3) {
+                            if (value.isEmpty) {
                               return "Please enter a valid phoneno.";
                             }
                           }),
 
 
+                      Padding(
+                          padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                          child: Text('Role',
+                              style: TextStyle(fontSize: 20)
+                          )
+                      ),
+
+
+                      new PopupMenuButton<String>(
+
+                        icon: const Icon(Icons.arrow_drop_down),
+                        onSelected: (String value) {
+                          roleController.text = value;
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return items.map<PopupMenuItem<String>>((String value) {
+                            return new PopupMenuItem(child: new Text(value), value: value);
+                          }).toList();
+                        },
+                      ),
 
                       RaisedButton(
-                          child: Text(_isLoading ? 'Creating...' : 'Submit', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
-                          color: Colors.black,
-                          textColor: Colors.white,
-                          onPressed:_isLoading ? null: () {
+                        child: Text(_isLoading ? 'Creating...' : 'Create account', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                        color: Colors.black,
+                        textColor: Colors.white,
+                          onPressed:() {
                             setState(() {
-                              updateUsers(nameController.text,emailController.text, pwdController.text, fullnameController.text, phonenoController.text);
-                            },
+
+                              if (_registerFormKey.currentState.validate()) {
+                                // If the form is valid, display a Snackbar.
+
+                              }
+                            futureUsers = createUsers(
+                                nameController.text,
+                                emailController.text,
+                                pwdController.text,
+                                roleController.text,
+                                fullnameController.text,
+                                icnoController.text,
+                                phonenoController.text);
+                            }
                             );
                           }
                       ),
-
+                      Text("Already have an account?", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                      FlatButton(
+                        child: Text("Login here!", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
+                        onPressed: () {
+                          Navigator.pop(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context){
+                                    return LoginCustomerPage();
+                                  }
+                              )
+                          );
+                        },
+                      )
                     ],
                   ),
                 )
@@ -212,35 +264,7 @@ class _EditPageState extends State<EditPage> {
         )
     );
   }
-
-
-
-
-  Future<void> updateUsers(name, email, password, fullname, phoneno) async {
-    var data = {
-
-    "name": name,
-    "email": email,
-    "password": password,
-    "fullname": fullname,
-    "phoneno": phoneno
-    };
-
-    print("users/${currentUser}");
-    final response = await CallApi().updateData(data,"users/${currentUser}");
-    print(response.statusCode);
-
-    if (response.statusCode == 200) {
-
-    }
-
-    else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load server');
-    }
-  }
-
-
-
 }
+
+
+

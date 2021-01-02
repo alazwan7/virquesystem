@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:virque/userprofile.dart';
-import 'home.dart';
+import 'package:virque/Customers/userprofile.dart';
+import '../home.dart';
 import 'homemenu.dart';
 import 'loginCustomer.dart';
 

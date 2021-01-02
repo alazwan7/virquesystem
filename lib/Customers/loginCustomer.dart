@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:virque/register1.dart';
-import 'package:virque/userdashboard.dart';
-import 'home.dart';
-import 'model/users.dart';
+import 'package:virque/Customers/register1.dart';
+import 'package:virque/Customers/userdashboard.dart';
+import 'package:virque/model/users.dart';
+
+
+import '../home.dart';
+
 
 
 

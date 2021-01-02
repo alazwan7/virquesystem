@@ -2,12 +2,13 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'file:///C:/Users/Asyraaf/AndroidStudioProjects/virque-master/lib/api/api.dart';
-import 'package:virque/userdashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:virque/Customers/userdashboard.dart';
+import 'package:virque/api/api.dart';
+import 'package:virque/model/users.dart';
 
 import 'editProfile.dart';
-import 'model/users.dart';
+
 
 class UserProfile extends StatefulWidget {
   @override
