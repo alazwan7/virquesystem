@@ -22,71 +22,79 @@ class DashBoardState extends State<DashBoard> {
 
 
   Widget build (BuildContext ctxt) {
-    return new Drawer(
-      child: ListView(
-        children: <Widget>[
-          DrawerHeader(
-              decoration: BoxDecoration(
+    return SafeArea(
+      child: new Drawer(
+        child: Container(
+          decoration: new BoxDecoration(
+            color: Colors.blue.withOpacity(0.25),
 
-                color: Colors.grey,
+          ),
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                  decoration: BoxDecoration(
 
-              ),
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Material(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      elevation: 10,
-                      child: Padding(padding: EdgeInsets.all(8.0),
-                        child: Image.asset("assets/images/viqueLogo.png", height: 90, width: 90),
-                      ),
+                    color: Colors.black,
+
+                  ),
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        Material(
+                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                          elevation: 10,
+                          child: Padding(padding: EdgeInsets.all(8.0),
+                            child: Image.asset("assets/images/viqueLogo.png", height: 90, width: 90),
+                          ),
+                        ),
+
+                        Text('Virque', style: TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: ''),)
+
+                      ],
                     ),
+                  )),
+              CustomListTile(Icons.menu_book, 'Menu', ()=>{
+                Navigator.pop(ctxt),
+                Navigator.push(ctxt,
+                    new MaterialPageRoute(builder: (ctxt) => new HomeScreen())
+                )
+              }),
+              CustomListTile(Icons.person, 'Profile', ()=>{
+                Navigator.pop(ctxt),
+                Navigator.push(ctxt,
 
-                    Text('Virque', style: TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: ''),)
+                    new MaterialPageRoute(builder: (ctxt) => new UserProfile())
+                )
+              }),
 
-                  ],
-                ),
-              )),
-          CustomListTile(Icons.menu_book, 'Menu', ()=>{
-            Navigator.pop(ctxt),
-            Navigator.push(ctxt,
-                new MaterialPageRoute(builder: (ctxt) => new HomeScreen())
-            )
-          }),
-          CustomListTile(Icons.person, 'Profile', ()=>{
-            Navigator.pop(ctxt),
-            Navigator.push(ctxt,
+              CustomListTile(Icons.notifications, 'Notification', ()=>{
+                Navigator.pop(ctxt),
+                Navigator.push(ctxt,
+                    new MaterialPageRoute(builder: (ctxt) => new WelcomePage())
+                )
+              }),
 
-                new MaterialPageRoute(builder: (ctxt) => new UserProfile())
-            )
-          }),
+              CustomListTile(Icons.feedback_rounded, 'feedback', ()=>{
+                Navigator.pop(ctxt),
+                Navigator.push(ctxt,
+                    new MaterialPageRoute(builder: (ctxt) => new WelcomePage())
+                )
+              }),
 
-          CustomListTile(Icons.notifications, 'Notification', ()=>{
-            Navigator.pop(ctxt),
-            Navigator.push(ctxt,
-                new MaterialPageRoute(builder: (ctxt) => new WelcomePage())
-            )
-          }),
-
-          CustomListTile(Icons.feedback_rounded, 'feedback', ()=>{
-            Navigator.pop(ctxt),
-            Navigator.push(ctxt,
-                new MaterialPageRoute(builder: (ctxt) => new WelcomePage())
-            )
-          }),
-
-          CustomListTile(Icons.logout, 'Log Out', () async {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            prefs?.clear();
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(
-                    builder: (BuildContext ctx) => LoginCustomerPage()));
-          }
-    )
+              CustomListTile(Icons.logout, 'Log Out', () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs?.clear();
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(
+                        builder: (BuildContext ctx) => LoginCustomerPage()));
+              }
+      )
 
 
-    ],
+      ],
 
+          ),
+        ),
       ),
     );
   }

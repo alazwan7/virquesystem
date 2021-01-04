@@ -32,7 +32,7 @@ class homeScreenState extends State<HomeScreen> {
           height: 56,
           child: RaisedButton(
               child: Text('Request Ticket No.', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
-              color: Colors.grey,
+              color: Colors.black,
 
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)
@@ -58,7 +58,7 @@ class homeScreenState extends State<HomeScreen> {
           height: 56,
           child: RaisedButton(
               child: Text('Display Ticket No.', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
-              color: Colors.grey,
+              color: Colors.black,
 
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)
@@ -84,7 +84,7 @@ class homeScreenState extends State<HomeScreen> {
           height: 56,
           child: RaisedButton(
               child: Text('Visitor Stat Today', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
-              color: Colors.grey,
+              color: Colors.black,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)
               ),
@@ -108,7 +108,7 @@ class homeScreenState extends State<HomeScreen> {
           height: 56,
           child: RaisedButton(
               child: Text('Notification', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
-              color: Colors.grey,
+              color: Colors.black,
 
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)
@@ -134,7 +134,7 @@ class homeScreenState extends State<HomeScreen> {
               centerTitle: true,
 
               title: Text("Home Menu", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: '')),
-              backgroundColor: Colors.grey,
+              backgroundColor: Colors.black,
 
               leading: GestureDetector(
                 onTap: () async {
@@ -150,46 +150,57 @@ class homeScreenState extends State<HomeScreen> {
 
 
 
-          body: Center(
-            child: ListView(
+          body: Container(
+            decoration: new BoxDecoration(
+                color: Colors.blue.withOpacity(0.25),
+                borderRadius: new BorderRadius.only(
+                  topLeft: const Radius.circular(20.0),
+                  topRight: const Radius.circular(20.0),
+                  bottomLeft: const Radius.circular(20.0),
+                  bottomRight: const Radius.circular(20.0),
+                )
+            ),
+            child: Center(
+              child: ListView(
 
-            shrinkWrap: false,
-            // padding: EdgeInsets.symmetric(horizontal: 20),
-            children: <Widget>[
-              DrawerHeader(
+              shrinkWrap: false,
+              // padding: EdgeInsets.symmetric(horizontal: 20),
+              children: <Widget>[
+                DrawerHeader(
 
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
 
-                  ),
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        Material(
-                          borderRadius: BorderRadius.all(Radius.circular(70.0)),
-                          elevation: 10,
-                          child: Padding(padding: EdgeInsets.all(8.0),
-                            child: Image.asset("assets/images/viqueLogo.png", height: 90, width: 90),
-                          ),
-                        ),
-                        Text('Virque', style: TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: ''),)
-                      ],
                     ),
-                  )
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
+                          Material(
+                            borderRadius: BorderRadius.all(Radius.circular(70.0)),
+                            elevation: 10,
+                            child: Padding(padding: EdgeInsets.all(8.0),
+                              child: Image.asset("assets/images/viqueLogo.png", height: 90, width: 90),
+                            ),
+                          ),
+                          Text('Virque', style: TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: ''),)
+                        ],
+                      ),
+                    )
 
-              ),
+                ),
 
 
 
-              buttonRequest,
-              buttonDisplay,
-              buttonStat,
-              buttonNoti
+                buttonRequest,
+                buttonDisplay,
+                buttonStat,
+                buttonNoti
 
 
 
-            ],
-          ),
+              ],
+            ),
+            ),
           ),
 
           ),

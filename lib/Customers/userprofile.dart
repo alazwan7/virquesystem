@@ -50,26 +50,106 @@ class _UserProfileState extends State<UserProfile> {
             ),
           ),
         ),
-        body: Center(
-          child: Column(
-                        children: <Widget>[
-                          Text(currentUser!=null ? currentUser.name : ""),
-                          Text(currentUser!=null ? currentUser.email  : ""),
-                          Text(currentUser!=null ? currentUser.fullname  : ""),
-                          Text(currentUser!=null ? currentUser.phoneno  : ""),
+        body: Container(
+          decoration: new BoxDecoration(
+          color: Colors.blue.withOpacity(0.25),
+
+        ),
+          child: Padding(
+            padding: const EdgeInsets.all(40.0),
+            child: Container(
+              decoration: new BoxDecoration(
+                  color: Colors.grey.withOpacity(0.25),
+                  borderRadius: new BorderRadius.only(
+                    topLeft: const Radius.circular(20.0),
+                    topRight: const Radius.circular(20.0),
+                    bottomLeft: const Radius.circular(20.0),
+                    bottomRight: const Radius.circular(20.0),
+                  )
+              ),
+              child: Center(
+                child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Text("Username:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                                      Text(currentUser!=null ? currentUser.name : "", textAlign: TextAlign.center,
+                                        style: new TextStyle(color: Colors.black, fontSize: 15, fontFamily: ''),
+                                      ),
+                                    ],
+                                  ),
+                                ),
 
 
-                          FlatButton(
-                            child: Text("Edit", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
-                            onPressed: () async {
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(builder: (BuildContext ctx) => EditPage()));
-                            },
-                          )
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Text("Email:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                                      Text(currentUser!=null ? currentUser.email  : "", textAlign: TextAlign.center,
+                                        style: new TextStyle(color: Colors.black, fontSize: 15, fontFamily: ''),
+                                      ),
+                                    ],
+                                  ),
+                                ),
 
-                        ],
-                      )
-                    )
+
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Text("Fullname:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                                      Text(currentUser!=null ? currentUser.fullname  : "", textAlign: TextAlign.center,
+                                        style: new TextStyle(color: Colors.black, fontSize: 15, fontFamily: ''),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Text("Phone no:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                                      Text(currentUser!=null ? currentUser.phoneno  : "", textAlign: TextAlign.center,
+                                        style: new TextStyle(color: Colors.black, fontSize: 15, fontFamily: ''),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: new BoxDecoration(
+                                        color: Colors.blueGrey.withOpacity(0.25),
+                                        borderRadius: new BorderRadius.only(
+                                          topLeft: const Radius.circular(10.0),
+                                          topRight: const Radius.circular(10.0),
+                                          bottomLeft: const Radius.circular(10.0),
+                                          bottomRight: const Radius.circular(10.0),
+                                        )
+                                    ),
+                                    child: FlatButton(
+                                      child: Text("Edit", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
+                                      onPressed: () async {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(builder: (BuildContext ctx) => EditPage()));
+                                      },
+                                    ),
+                                  ),
+                                )
+
+                              ],
+                            )
+                          ),
+            ),
+          ),
+        )
               // By default, show a loading spinner.
         ),
     );

@@ -78,7 +78,7 @@ class _requestPageState extends State<requestPage> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
-                                        Text("Name:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                                        Text("Username:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
                                         Text(currentUser!=null ? currentUser.name : "", textAlign: TextAlign.center,
                                           style: new TextStyle(color: Colors.black, fontSize: 15, fontFamily: ''),
                                         ),
@@ -91,7 +91,7 @@ class _requestPageState extends State<requestPage> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
-                                        Text("Username:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+                                        Text("Email:", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
                                         Text(currentUser!=null ? currentUser.email  : "", textAlign: TextAlign.center,
                                           style: new TextStyle(color: Colors.black, fontSize: 15, fontFamily: ''),
                                         ),
