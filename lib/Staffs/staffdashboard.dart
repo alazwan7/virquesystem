@@ -1,82 +1,101 @@
 import 'package:flutter/material.dart';
-import 'package:virque/Customers/homemenu.dart';
-import 'package:virque/Customers/loginCustomer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virque/Customers/userprofile.dart';
-
 import '../home.dart';
+import 'HomeMenuStaff.dart';
+import 'StaffProfile.dart';
+import 'loginStaff.dart';
 
 
 
 
+class StaffDashBoard extends StatefulWidget {
 
+  StaffDashBoard({Key key , this.title}) : super(key : key);
+  final String title;
 
-
-
-class StaffDashBoard extends StatelessWidget {
   @override
+  StaffDashBoardState createState() => StaffDashBoardState();
+}
+
+class StaffDashBoardState extends State<StaffDashBoard> {
+
+
+
   Widget build (BuildContext ctxt) {
-    return new Drawer(
-      child: ListView(
-        children: <Widget>[
-          DrawerHeader(
-              decoration: BoxDecoration(
+    return SafeArea(
+      child: new Drawer(
+        child: Container(
+          decoration: new BoxDecoration(
+            color: Colors.greenAccent.withOpacity(0.25),
 
-                color: Colors.grey,
+          ),
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                  decoration: BoxDecoration(
 
+                    color: Colors.black,
 
-              ),
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    Material(
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      elevation: 10,
-                      child: Padding(padding: EdgeInsets.all(8.0),
-                        child: Image.asset("assets/images/skull.png", height: 90, width: 90),
-                      ),
+                  ),
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        Material(
+                          borderRadius: BorderRadius.all(Radius.circular(100.0)),
+                          elevation: 10,
+                          child: Padding(padding: EdgeInsets.all(8.0),
+                            child: Image.asset("assets/images/viqueLogo.png", height: 90, width: 90),
+                          ),
+                        ),
+
+                        Text('Virque Staff', style: TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: ''),)
+
+                      ],
                     ),
+                  )),
+              CustomListTile(Icons.menu_book, 'Menu', ()=>{
+                Navigator.pop(ctxt),
+                Navigator.push(ctxt,
+                    new MaterialPageRoute(builder: (ctxt) => new HomeScreenStaff())
+                )
+              }),
+              CustomListTile(Icons.person, 'Profile', ()=>{
+                Navigator.pop(ctxt),
+                Navigator.push(ctxt,
 
-                    Text('Virque Staff', style: TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: ''),)
+                    new MaterialPageRoute(builder: (ctxt) => new StaffProfile())
+                )
+              }),
 
-                  ],
-                ),
-              )),
-          CustomListTile(Icons.menu_book, 'Menu', ()=>{
-            Navigator.pop(ctxt),
-            Navigator.push(ctxt,
-                new MaterialPageRoute(builder: (ctxt) => new HomeScreen())
-            )
-          }),
-          CustomListTile(Icons.person, 'Profile', ()=>{
-            Navigator.pop(ctxt),
-            Navigator.push(ctxt,
+              CustomListTile(Icons.notifications, 'Notification', ()=>{
+                Navigator.pop(ctxt),
+                Navigator.push(ctxt,
+                    new MaterialPageRoute(builder: (ctxt) => new WelcomePage())
+                )
+              }),
 
-                new MaterialPageRoute(builder: (ctxt) => new UserProfile())
-            )
-          }),
-          // CustomListTile(Icons.notifications, 'Notification', ()=>{
-          //   Navigator.pop(ctxt),
-          //   Navigator.push(ctxt,
-          //       new MaterialPageRoute(builder: (ctxt) => new WelcomePage())
-          //   )
-          // }),
+              CustomListTile(Icons.feedback_rounded, 'feedback', ()=>{
+                Navigator.pop(ctxt),
+                Navigator.push(ctxt,
+                    new MaterialPageRoute(builder: (ctxt) => new WelcomePage())
+                )
+              }),
 
-          CustomListTile(Icons.feedback_rounded, 'feedback', ()=>{
-            Navigator.pop(ctxt),
-            Navigator.push(ctxt,
-                new MaterialPageRoute(builder: (ctxt) => new WelcomePage())
-            )
-          }),
-          CustomListTile(Icons.lock, 'Log Out', ()=>{
-            Navigator.pop(ctxt),
-            Navigator.push(ctxt,
+              CustomListTile(Icons.logout, 'Log Out', () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs?.clear();
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(
+                        builder: (BuildContext ctx) => LoginStaffPage()));
+              }
+              )
 
-                new MaterialPageRoute(builder: (ctxt) => new LoginCustomerPage())
 
-            )
-          }),
-        ],
+            ],
 
+          ),
+        ),
       ),
     );
   }
@@ -117,6 +136,8 @@ class CustomListTile extends StatelessWidget{
                       ),),
                     ],),
                     // Icon(Icons.arrow_right)
+
+                    Icon(Icons.arrow_right)
 
                   ],)
             )

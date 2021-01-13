@@ -196,7 +196,7 @@ class _LoginCustomerPageState extends State<LoginCustomerPage> {
 
   Future<Users> createLoginState(String email, password) async {
     final http.Response response = await http.post(
-        'http://192.168.49.116:8000/api/login/',
+        'http://172.20.10.2:8000/api/login/',
 
         headers: <String, String>{
           'Accept': 'application/json',

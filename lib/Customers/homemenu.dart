@@ -176,7 +176,7 @@ class homeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: <Widget>[
                           Material(
-                            borderRadius: BorderRadius.all(Radius.circular(70.0)),
+                            borderRadius: BorderRadius.all(Radius.circular(100.0)),
                             elevation: 10,
                             child: Padding(padding: EdgeInsets.all(8.0),
                               child: Image.asset("assets/images/viqueLogo.png", height: 90, width: 90),
