@@ -15,7 +15,7 @@ import 'loginCustomer.dart';
 
 
 
-Future<Users> createUsers(String name, email, password, role, fullname, icno, phoneno) async {
+Future<Users> createUsers(String name, email, password, fullname, icno, phoneno, role) async {
 
 
 
@@ -49,8 +49,8 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
 
+  String role = 'Customer';
 
-  var items = ['Customer'];
 
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
   TextEditingController nameController;
@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController fullnameController;
   TextEditingController icnoController;
   TextEditingController phonenoController;
-  TextEditingController roleController;
+
 
 
   Future<Users> futureUsers;
@@ -78,7 +78,6 @@ class _RegisterPageState extends State<RegisterPage> {
     icnoController = new TextEditingController();
     phonenoController = new TextEditingController();
 
-    roleController = new TextEditingController();
     super.initState();
   }
 
@@ -200,25 +199,37 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
                       Padding(
-                          padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                          child: Text('Role',
-                              style: TextStyle(fontSize: 20)
-                          )
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text("Role", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
+                            DropdownButton<String>(
+                              value: role,
+                              iconSize: 24,
+                              elevation: 16,
+                              style: TextStyle(color: Colors.deepPurple),
+                              underline: Container(
+                                height: 2,
+                                color: Colors.deepPurpleAccent,
+                              ),
+                              onChanged: (String Value) {
+                                setState(() {
+                                  role = Value;
+                                });
+                              },
+                              items: <String>['Customer']
+                                  .map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+
+                          ],
+                        ),
                       ),
 
-
-                      new PopupMenuButton<String>(
-
-                        icon: const Icon(Icons.arrow_drop_down),
-                        onSelected: (String value) {
-                          roleController.text = value;
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return items.map<PopupMenuItem<String>>((String value) {
-                            return new PopupMenuItem(child: new Text(value), value: value);
-                          }).toList();
-                        },
-                      ),
 
                       RaisedButton(
                         child: Text(_isLoading ? 'Creating...' : 'Create account', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
@@ -235,10 +246,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                 nameController.text,
                                 emailController.text,
                                 pwdController.text,
-                                roleController.text,
                                 fullnameController.text,
                                 icnoController.text,
-                                phonenoController.text);
+                                phonenoController.text,
+                                role
+                            );
                             }
                             );
                           }

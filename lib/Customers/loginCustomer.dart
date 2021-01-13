@@ -38,10 +38,20 @@ class _LoginCustomerPageState extends State<LoginCustomerPage> {
 
   @override
   Widget build(BuildContext context) {
+
+
     final home = Container(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+
+          Container(
+            child: Text(
+              'Customer Login',
+              style: TextStyle(fontSize: 30.0, fontFamily: ''),
+            ),
+          ),
+
           Container(
               width: 70,
               child: FlatButton(
@@ -65,9 +75,15 @@ class _LoginCustomerPageState extends State<LoginCustomerPage> {
                 ),
               )
           ),
+
+
         ],
       ),
     );
+
+
+
+
     final logo = Padding(
       padding: EdgeInsets.all(20),
       child: Hero(

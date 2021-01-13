@@ -41,8 +41,17 @@ class _LoginStaffPageState extends State<LoginStaffPage> {
   Widget build(BuildContext context) {
     final home = Container(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+
+          Container(
+            child: Text(
+              'Staff Login',
+              style: TextStyle(fontSize: 30.0, fontFamily: ''),
+            ),
+          ),
+
+
           Container(
               width: 70,
               child: FlatButton(
@@ -137,33 +146,7 @@ class _LoginStaffPageState extends State<LoginStaffPage> {
         ),
       ),
     );
-    final buttonRegister = Padding(
-      padding: EdgeInsets.only(bottom: 5),
-      child: ButtonTheme(
-        height: 56,
-        child: RaisedButton(
-            child: Text('Register', style: TextStyle(
 
-                color: Colors.white, fontSize: 20, fontFamily: '')),
-
-            color: Colors.black87,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50)
-            ),
-            onPressed: () =>
-            {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) {
-                        return RegisterPage();
-                      }
-                  )
-              )
-            }
-        ),
-      ),
-    );
     final buttonForgotPassword = FlatButton(
         child: Text('Forgot Password', style: TextStyle(
 
@@ -184,7 +167,6 @@ class _LoginStaffPageState extends State<LoginStaffPage> {
                 inputEmail,
                 inputPassword,
                 buttonLogin,
-                buttonRegister,
                 buttonForgotPassword
               ],
             ),
