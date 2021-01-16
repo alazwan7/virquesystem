@@ -132,7 +132,7 @@ class homeQueuePageState extends State<homeQueuePage> {
                                             countername = Value;
                                           });
                                         },
-                                        items: <String>['A1', 'B1']
+                                        items: <String>['A1']
                                             .map<DropdownMenuItem<String>>((String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
@@ -223,8 +223,6 @@ class homeQueuePageState extends State<homeQueuePage> {
         )
       // By default, show a loading spinner.
     );
-
-
 
   }
   Future<Users> users() async {

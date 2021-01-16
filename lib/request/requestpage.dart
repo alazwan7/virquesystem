@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:virque/model/counters.dart';
 import 'package:virque/model/users.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -16,7 +17,7 @@ class requestPage extends StatefulWidget {
 
 // ignore: camel_case_types
 class _requestPageState extends State<requestPage> {
-
+  Future<Counters> futureCounter;
   var currentUser;
   @override
   void initState() {
@@ -125,6 +126,7 @@ class _requestPageState extends State<requestPage> {
                                     ),
                                   ),
 
+
                                 ],
                               ),
                             ),
@@ -188,6 +190,7 @@ class _requestPageState extends State<requestPage> {
       throw Exception('Failed to load server');
     }
   }
+
 
 }
 

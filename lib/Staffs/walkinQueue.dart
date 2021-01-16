@@ -133,7 +133,7 @@ class walkinQueuePageState extends State<walkinQueuePage> {
                                             countername = Value;
                                           });
                                         },
-                                        items: <String>['A2', 'B2']
+                                        items: <String>['A2']
                                             .map<DropdownMenuItem<String>>((String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
@@ -202,7 +202,7 @@ class walkinQueuePageState extends State<walkinQueuePage> {
                               )
                           ),
                           child: FlatButton(
-                            child: Text("Request Ticket", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
+                            child: Text("Open Now", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
                             onPressed: () async {
                               futureCounter = createCounters(
                                 widget.text1,
