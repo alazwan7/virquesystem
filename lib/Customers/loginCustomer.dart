@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virque/Customers/register1.dart';
 import 'package:virque/Customers/userdashboard.dart';
@@ -9,6 +10,7 @@ import 'package:virque/model/users.dart';
 
 
 import '../home.dart';
+import '../loadingScreen.dart';
 
 
 
@@ -27,7 +29,7 @@ class _LoginCustomerPageState extends State<LoginCustomerPage> {
   //Gettting the JwtToken object and making the instance of it
 
   Future<Users> futureJwt;
-
+var pr;
 
   final TextEditingController emailController = new TextEditingController();
 
@@ -38,7 +40,21 @@ class _LoginCustomerPageState extends State<LoginCustomerPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    pr = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
+    pr.style(
+        message: 'Loading....',
+        borderRadius: 10.0,
+        backgroundColor: Colors.white,
+        progressWidget: LoadingScreen(),
+        elevation: 20.0,
+        insetAnimCurve: Curves.elasticOut,
+        progress: 0.0,
+        maxProgress: 100.0,
+        progressTextStyle: TextStyle(
+            color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400,fontFamily: "Muli"),
+        messageTextStyle: TextStyle(
+            color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600, fontFamily: "Muli")
+    );
 
     final home = Container(
       child: Row(

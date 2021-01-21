@@ -17,7 +17,7 @@ class LoadingScreen extends StatelessWidget {
             duration: Duration(seconds: 45),
             tween: Tween<double>(begin: 0, end: 120 *3.142),
             builder: (_ ,double angle, __){
-              return Transform.rotate(angle: angle,child: SvgPicture.asset("assets/images/830.svg"),);
+              return Transform.rotate(angle: angle,child: SvgPicture.asset("assets/images/6.svg"),);
             }
         ),
       ),

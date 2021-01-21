@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virque/Customers/register1.dart';
 import 'package:virque/Customers/userdashboard.dart';
+import 'package:virque/request/displayRequest.dart';
 import 'package:virque/request/requestpage.dart';
 
 
@@ -93,7 +94,7 @@ class homeScreenState extends State<HomeScreen> {
                     context,
                     MaterialPageRoute(
                         builder: (context){
-                          return RegisterPage();
+                          return displayStatPage();
                         }
                     )
                 )
