@@ -197,12 +197,14 @@ class displayStatPageState extends State<displayStatPage> {
 
       setState(() {
 
-        requestedUser = Request.fromJson(values);
+//        requestedUser = Request.fromJson(values);
         requestno = count;
+
 
 
       },
       );
+      print(requestno);
       return request;
 
     }
