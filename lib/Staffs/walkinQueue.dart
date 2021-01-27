@@ -9,26 +9,7 @@ import 'file:///C:/Users/Asyraaf/AndroidStudioProjects/virque-master/lib/api/api
 import 'package:virque/request/requirementRequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Counters> createCounters(String textToSend1 , countername, counterstatus, users) async {
 
-
-  SharedPreferences pref = await SharedPreferences.getInstance();
-  var users = pref.getString("id");
-  var data={
-    'counter_mode': textToSend1,
-    'counter_name' : countername,
-    'counter_status' : counterstatus,
-    'user_id' : users,
-  };
-  var response  = await CallApi().postData(data,"counters");
-  print(response.statusCode);
-
-
-  if (response.statusCode == 201) {
-    print("workingggg") ; } else {
-    throw Exception('Failed to create Counter');
-  }
-}
 
 
 class walkinQueuePage extends StatefulWidget {
@@ -250,5 +231,56 @@ class walkinQueuePageState extends State<walkinQueuePage> {
       throw Exception('Failed to load server');
     }
   }
+  Future<Counters> createCounters(String textToSend1 , countername, counterstatus, users) async {
 
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var users = pref.getString("id");
+    var data={
+      'counter_mode': textToSend1,
+      'counter_name' : countername,
+      'counter_status' : counterstatus,
+      'user_id' : users,
+    };
+    var response  = await CallApi().postData(data,"counters");
+    print(response.statusCode);
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text("Successfull"),
+      content: Text("You have successfull manage the counter"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    AlertDialog alert2 = AlertDialog(
+      title: Text("Not Successfull"),
+      content: Text("Please fill the form first"),
+      actions: [
+        okButton,
+      ],
+    );
+
+
+    if (response.statusCode == 201) {
+      print("workingggg") ;
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+
+    } else {
+      throw Exception('Failed to create Counter');
+    }
+  }
 }

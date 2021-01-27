@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'dart:async';
 import 'dart:convert';
+import '../loadingScreen.dart';
 import 'file:///C:/Users/Asyraaf/AndroidStudioProjects/virque-master/lib/api/api.dart';
 import 'package:virque/maps_api/secrets.dart';
 import 'package:virque/model/request.dart';
@@ -14,29 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virque/model/users.dart';
 
 
-
-
-Future<Request> createRequest(String textToSend1 , textToSend2, currentLocation, distance, users) async {
-
-  SharedPreferences pref = await SharedPreferences.getInstance();
-  var users = pref.getString("id");
-  var data={
-    'senior_citizen': textToSend1,
-    'disable' : textToSend2,
-    'currentLocation' : currentLocation,
-    'distance' : distance,
-    'user_id' : users,
-
-  };
-  var response  = await CallApi().postData(data,"requests");
-  print(response.statusCode);
-
-
-  if (response.statusCode == 201) {
-    print("workingggg") ; } else {
-    throw Exception('Failed to create User');
-  }
-}
 
 class finalRequestPage extends StatefulWidget {
   @override
@@ -51,6 +30,10 @@ class finalRequestPage extends StatefulWidget {
 class _finalRequestPageState extends State<finalRequestPage> {
 
   Future<Request> futureRequest;
+  bool request;
+  var pr;
+  var pr2;
+
 
   CameraPosition _initialLocation = CameraPosition(target: LatLng(0.0, 0.0));
   GoogleMapController mapController;
@@ -200,7 +183,7 @@ class _finalRequestPageState extends State<finalRequestPage> {
 
   _getDestinationAddress() async {
     try {
-      List<Placemark> p = await _geolocator.placemarkFromCoordinates(34.052235, -118.243683);
+      List<Placemark> p = await _geolocator.placemarkFromCoordinates(2.222457, 102.450857);
 
       Placemark place = p[0];
 
@@ -237,8 +220,8 @@ class _finalRequestPageState extends State<finalRequestPage> {
             : startPlacemark[0].position;
         Position destinationCoordinates = _destinationAddress == _thedestinationAddress
             ? Position(
-            latitude: 34.052235,
-            longitude:  -118.243683)
+            latitude: 2.222457,
+            longitude: 102.450857)
             : destinationPlacemark[0].position;
 
         // Start Location Marker
@@ -259,7 +242,7 @@ class _finalRequestPageState extends State<finalRequestPage> {
         Marker destinationMarker = Marker(
           markerId: MarkerId('$destinationCoordinates'),
           position: LatLng(
-              34.052235, -118.243683
+              2.222457,102.450857
           ),
           infoWindow: InfoWindow(
             title: 'Destination',
@@ -323,7 +306,7 @@ class _finalRequestPageState extends State<finalRequestPage> {
         // between small segments
 
         var distanceInMeters = await
-        _geolocator.distanceBetween(_currentPosition.latitude, _currentPosition.longitude, 34.052235, -118.243683);
+        _geolocator.distanceBetween(_currentPosition.latitude, _currentPosition.longitude, 2.222457, 102.450857);
         print(distanceInMeters);
         setState(() {
 
@@ -346,7 +329,7 @@ class _finalRequestPageState extends State<finalRequestPage> {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       API_KEY, // Google Maps API Key
       PointLatLng(start.latitude, start.longitude),
-      PointLatLng(34.052235, -118.243683),
+      PointLatLng(2.222457, 102.450857),
       travelMode: TravelMode.transit,
     );
 
@@ -382,6 +365,44 @@ class _finalRequestPageState extends State<finalRequestPage> {
   @override
   Widget build(BuildContext context) {
 
+
+
+//    pr = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
+//    pr.style(
+//        message: 'Requests Submitted!!',
+//        borderRadius: 10.0,
+//        backgroundColor: Colors.white,
+//        progressWidget: LoadingScreen(),
+//        elevation: 20.0,
+//        insetAnimCurve: Curves.elasticOut,
+//        progress: 0.0,
+//        maxProgress: 100.0,
+//        progressTextStyle: TextStyle(
+//            color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400,fontFamily: "Muli"),
+//        messageTextStyle: TextStyle(
+//            color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600, fontFamily: "Muli")
+//    );
+//
+//
+//    pr2 = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
+//    pr2.style(
+//        message: 'failed!! Please fill the requirement first ',
+//        borderRadius: 10.0,
+//        backgroundColor: Colors.white,
+//        progressWidget: LoadingScreen(),
+//        elevation: 20.0,
+//        insetAnimCurve: Curves.elasticOut,
+//        progress: 0.0,
+//        maxProgress: 100.0,
+//        progressTextStyle: TextStyle(
+//            color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400,fontFamily: "Muli"),
+//        messageTextStyle: TextStyle(
+//            color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600, fontFamily: "Muli")
+//    );
+
+
+
+
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -393,248 +414,78 @@ class _finalRequestPageState extends State<finalRequestPage> {
           centerTitle: true,
           backgroundColor: Colors.black,
         ),
-        body: Center(
-            child: new Center(
-                child: Column(
+        body: Container(
+          padding: const EdgeInsets.all(0.0),
+          child: SingleChildScrollView(
+              child: new Center(
+                  child: Column(
 
-                  children: <Widget>[
+                    children: <Widget>[
 
 
-                    Center(
-                      child: Container(
-                        margin: const EdgeInsets.all(10.0),
+                      Center(
+                        child: Container(
+                          margin: const EdgeInsets.all(10.0),
 
-                        height: 500.0,
+                          height: 500.0,
 
-                        child: Scaffold(
-                          body: Stack(
-                            children: <Widget>[
-                              // TODO: Add Map View
-                              GoogleMap(
-                                markers: markers != null ? Set<Marker>.from(markers) : null,
-                                initialCameraPosition: _initialLocation,
-                                myLocationEnabled: true,
-                                myLocationButtonEnabled: false,
-                                mapType: MapType.normal,
-                                zoomGesturesEnabled: true,
-                                zoomControlsEnabled: false,
-                                polylines: Set<Polyline>.of(polylines.values),
-                                onMapCreated: (GoogleMapController controller) {
-                                  mapController = controller;
-                                },
-                              ),
-
-                              // Show zoom buttons
-                              SafeArea(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 10.0, top: 150.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      ClipOval(
-                                        child: Material(
-                                          color: Colors.blue[100], // button color
-                                          child: InkWell(
-                                            splashColor: Colors.blue, // inkwell color
-                                            child: SizedBox(
-                                              width: 50,
-                                              height: 50,
-                                              child: Icon(Icons.add),
-                                            ),
-                                            onTap: () {
-                                              mapController.animateCamera(
-                                                CameraUpdate.zoomIn(),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 20),
-                                      ClipOval(
-                                        child: Material(
-                                          color: Colors.blue[100], // button color
-                                          child: InkWell(
-                                            splashColor: Colors.blue, // inkwell color
-                                            child: SizedBox(
-                                              width: 50,
-                                              height: 50,
-                                              child: Icon(Icons.remove),
-                                            ),
-                                            onTap: () {
-                                              mapController.animateCamera(
-                                                CameraUpdate.zoomOut(),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                          child: Scaffold(
+                            body: Stack(
+                              children: <Widget>[
+                                // TODO: Add Map View
+                                GoogleMap(
+                                  markers: markers != null ? Set<Marker>.from(markers) : null,
+                                  initialCameraPosition: _initialLocation,
+                                  myLocationEnabled: true,
+                                  myLocationButtonEnabled: false,
+                                  mapType: MapType.normal,
+                                  zoomGesturesEnabled: true,
+                                  zoomControlsEnabled: false,
+                                  polylines: Set<Polyline>.of(polylines.values),
+                                  onMapCreated: (GoogleMapController controller) {
+                                    mapController = controller;
+                                  },
                                 ),
-                              ),
 
-                              SafeArea(
-                                child: Align(
-                                  alignment: Alignment.topCenter,
+                                // Show zoom buttons
+                                SafeArea(
                                   child: Padding(
-                                    padding: const EdgeInsets.only(top: 10.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white70,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(20.0),
-                                        ),
-                                      ),
-                                      width: width * 0.9,
-
-
-
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            Text(
-                                              'Places',
-                                              style: TextStyle(fontSize: 15.0),
-                                            ),
-                                            SizedBox(height: 5),
-                                            _textField(
-                                                label: 'Start',
-                                                hint: 'Choose starting point',
-                                                initialValue: _currentAddress,
-                                                prefixIcon: Icon(Icons.looks_one),
-                                                suffixIcon: IconButton(
-                                                  icon: Icon(Icons.my_location),
-                                                  onPressed: () {
-                                                    startAddressController.text = _currentAddress;
-                                                    _startAddress = _currentAddress;
-                                                  },
-                                                ),
-                                                controller: startAddressController,
-                                                width: width * 0.95,
-                                                locationCallback: (String value) {
-                                                  setState(() {
-                                                    _startAddress = value;
-                                                  });
-                                                }),
-                                            SizedBox(height: 10),
-                                            _textField(
-                                                label: 'Destination',
-                                                hint: 'Choose destination',
-                                                initialValue: '',
-                                                prefixIcon: Icon(Icons.looks_two),
-                                                suffixIcon: IconButton(
-                                                  icon: Icon(Icons.my_location),
-                                                  onPressed: () {
-                                                    destinationAddressController.text = _thedestinationAddress;
-                                                    _destinationAddress = _thedestinationAddress;
-                                                  },
-                                                ),
-                                                controller: destinationAddressController,
-                                                width: width * 0.95,
-                                                locationCallback: (String value) {
-                                                  setState(() {
-                                                    _destinationAddress = value;
-                                                  });
-                                                }),
-                                            SizedBox(height: 2),
-                                            Visibility(
-                                              visible: _placeDistance == null ? false : true,
-                                              child: Text(
-                                                'DISTANCE: $_placeDistance km',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 5),
-                                            RaisedButton(
-                                              onPressed: (_startAddress != '' &&
-                                                  _destinationAddress != '')
-                                                  ? () async {
-                                                setState(() {
-                                                  if (markers.isNotEmpty) markers.clear();
-                                                  if (polylines.isNotEmpty)
-                                                    polylines.clear();
-                                                  if (polylineCoordinates.isNotEmpty)
-                                                    polylineCoordinates.clear();
-                                                  _placeDistance = null;
-                                                });
-
-                                                _calculateDistance().then((isCalculated) {
-                                                  if (isCalculated) {
-                                                    _scaffoldKey.currentState.showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                            'Distance Calculated Sucessfully'),
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    _scaffoldKey.currentState.showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                            'Error Calculating Distance'),
-                                                      ),
-                                                    );
-                                                  }
-                                                });
-                                              }
-                                                  : null,
-                                              color: Colors.red,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(20.0),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  'Show Route'.toUpperCase(),
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 20.0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              SafeArea(
-                                child: Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 10.0, bottom: 60.0),
+                                    padding: const EdgeInsets.only(left: 10.0, top: 150.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
                                         ClipOval(
                                           child: Material(
-                                            color: Colors.orange[100], // button color
+                                            color: Colors.blue[100], // button color
                                             child: InkWell(
-                                              splashColor: Colors.orange, // inkwell color
+                                              splashColor: Colors.blue, // inkwell color
                                               child: SizedBox(
-                                                width: 56,
-                                                height: 56,
-                                                child: Icon(Icons.my_location),
+                                                width: 50,
+                                                height: 50,
+                                                child: Icon(Icons.add),
                                               ),
                                               onTap: () {
                                                 mapController.animateCamera(
-                                                  CameraUpdate.newCameraPosition(
-                                                    CameraPosition(
-                                                      target: LatLng(
-                                                        _currentPosition.latitude,
-                                                        _currentPosition.longitude,
-                                                      ),
-                                                      zoom: 18.0,
-                                                    ),
-                                                  ),
+                                                  CameraUpdate.zoomIn(),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 20),
+                                        ClipOval(
+                                          child: Material(
+                                            color: Colors.blue[100], // button color
+                                            child: InkWell(
+                                              splashColor: Colors.blue, // inkwell color
+                                              child: SizedBox(
+                                                width: 50,
+                                                height: 50,
+                                                child: Icon(Icons.remove),
+                                              ),
+                                              onTap: () {
+                                                mapController.animateCamera(
+                                                  CameraUpdate.zoomOut(),
                                                 );
                                               },
                                             ),
@@ -644,52 +495,232 @@ class _finalRequestPageState extends State<finalRequestPage> {
                                     ),
                                   ),
                                 ),
-                              ),
 
-                            ],
+                                SafeArea(
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 10.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white70,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(20.0),
+                                          ),
+                                        ),
+                                        width: width * 0.9,
+
+
+
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Text(
+                                                'Places',
+                                                style: TextStyle(fontSize: 15.0),
+                                              ),
+                                              SizedBox(height: 5),
+                                              _textField(
+                                                  label: 'Start',
+                                                  hint: 'Choose starting point',
+                                                  initialValue: _currentAddress,
+                                                  prefixIcon: Icon(Icons.looks_one),
+                                                  suffixIcon: IconButton(
+                                                    icon: Icon(Icons.my_location),
+                                                    onPressed: () {
+                                                      startAddressController.text = _currentAddress;
+                                                      _startAddress = _currentAddress;
+                                                    },
+                                                  ),
+                                                  controller: startAddressController,
+                                                  width: width * 0.95,
+                                                  locationCallback: (String value) {
+                                                    setState(() {
+                                                      _startAddress = value;
+                                                    });
+                                                  }),
+                                              SizedBox(height: 10),
+                                              _textField(
+                                                  label: 'Destination',
+                                                  hint: 'Choose destination',
+                                                  initialValue: '',
+                                                  prefixIcon: Icon(Icons.looks_two),
+                                                  suffixIcon: IconButton(
+                                                    icon: Icon(Icons.my_location),
+                                                    onPressed: () {
+                                                      destinationAddressController.text = _thedestinationAddress;
+                                                      _destinationAddress = _thedestinationAddress;
+                                                    },
+                                                  ),
+                                                  controller: destinationAddressController,
+                                                  width: width * 0.95,
+                                                  locationCallback: (String value) {
+                                                    setState(() {
+                                                      _destinationAddress = value;
+                                                    });
+                                                  }),
+                                              SizedBox(height: 2),
+                                              Visibility(
+                                                visible: _placeDistance == null ? false : true,
+                                                child: Text(
+                                                  'DISTANCE: $_placeDistance km',
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 5),
+                                              RaisedButton(
+                                                onPressed: (_startAddress != '' &&
+                                                    _destinationAddress != '')
+                                                    ? () async {
+                                                  setState(() {
+                                                    if (markers.isNotEmpty) markers.clear();
+                                                    if (polylines.isNotEmpty)
+                                                      polylines.clear();
+                                                    if (polylineCoordinates.isNotEmpty)
+                                                      polylineCoordinates.clear();
+                                                    _placeDistance = null;
+                                                  });
+
+                                                  _calculateDistance().then((isCalculated) {
+                                                    if (isCalculated) {
+                                                      _scaffoldKey.currentState.showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                              'Distance Calculated Sucessfully'),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      _scaffoldKey.currentState.showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                              'Error Calculating Distance'),
+                                                        ),
+                                                      );
+                                                    }
+                                                  });
+                                                }
+                                                    : null,
+                                                color: Colors.red,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(20.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    'get Distance'.toUpperCase(),
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 20.0,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                SafeArea(
+                                  child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 10.0, bottom: 60.0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: <Widget>[
+                                          ClipOval(
+                                            child: Material(
+                                              color: Colors.orange[100], // button color
+                                              child: InkWell(
+                                                splashColor: Colors.orange, // inkwell color
+                                                child: SizedBox(
+                                                  width: 56,
+                                                  height: 56,
+                                                  child: Icon(Icons.my_location),
+                                                ),
+                                                onTap: () {
+                                                  mapController.animateCamera(
+                                                    CameraUpdate.newCameraPosition(
+                                                      CameraPosition(
+                                                        target: LatLng(
+                                                          _currentPosition.latitude,
+                                                          _currentPosition.longitude,
+                                                        ),
+                                                        zoom: 18.0,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          ),
+
+                        ),
+                      ),
+
+
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          decoration: new BoxDecoration(
+                              color: Colors.blueGrey.withOpacity(0.25),
+                              borderRadius: new BorderRadius.only(
+                                topLeft: const Radius.circular(10.0),
+                                topRight: const Radius.circular(10.0),
+                                bottomLeft: const Radius.circular(10.0),
+                                bottomRight: const Radius.circular(10.0),
+                              )
+                          ),
+                          child: FlatButton(
+                            child: Text("Submit", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
+                            onPressed: () async {
+
+                                    setState(() {
+
+
+                                        futureRequest = createRequest(
+
+                                          widget.text1,
+                                          widget.text2,
+                                          _currentAddress,
+                                          _placeDistance,
+                                          users(),
+
+
+
+                                        );
+
+
+                                    }
+                              );
+                            },
                           ),
                         ),
-
                       ),
-                    ),
+                    ],
+                  )
 
-
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Container(
-                        decoration: new BoxDecoration(
-                            color: Colors.blueGrey.withOpacity(0.25),
-                            borderRadius: new BorderRadius.only(
-                              topLeft: const Radius.circular(10.0),
-                              topRight: const Radius.circular(10.0),
-                              bottomLeft: const Radius.circular(10.0),
-                              bottomRight: const Radius.circular(10.0),
-                            )
-                        ),
-                        child: FlatButton(
-                          child: Text("Submit", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
-                          onPressed: () async {
-                                  setState(() {
-                                    futureRequest = createRequest(
-
-                                        widget.text1,
-                                        widget.text2,
-                                      _currentAddress,
-                                    _placeDistance,
-                                     users(),
-
-
-                         );
-                                  });
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-
-            )
-          // By default, show a loading spinner.
+              )
+            // By default, show a loading spinner.
+          ),
         )
     );
 
@@ -717,5 +748,71 @@ class _finalRequestPageState extends State<finalRequestPage> {
       throw Exception('Failed to load server');
     }
   }
+
+
+  Future<Request> createRequest(String textToSend1 , textToSend2, currentLocation, distance, users) async {
+
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var users = pref.getString("id");
+    var data={
+      'senior_citizen': textToSend1,
+      'disable' : textToSend2,
+      'currentLocation' : currentLocation,
+      'distance' : distance,
+      'user_id' : users,
+
+    };
+
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("Successfull"),
+      content: Text("Your request have been submitted."),
+      actions: [
+        okButton,
+      ],
+    );
+
+
+    AlertDialog alert2 = AlertDialog(
+      title: Text("Note"),
+      content: Text("Please fill the requirement and get distance first"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    var response  = await CallApi().postData(data,"requests");
+    print(response.statusCode);
+
+
+    if (response.statusCode == 201) {
+      print("workingggg") ;
+
+//      pr.show();
+
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    } else {
+//      pr2.show();
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert2;
+        },
+      );
+      throw Exception('Failed to create User');
+    }
+  }
+
 
 }

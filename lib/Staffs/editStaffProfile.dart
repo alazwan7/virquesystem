@@ -95,7 +95,7 @@ class _EditStaffPageState extends State<EditStaffPage> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Register", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: '')),
+          title: Text("Update Details", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: '')),
           backgroundColor: Colors.black,
           leading: GestureDetector(
             onTap: () async {
@@ -213,16 +213,48 @@ class _EditStaffPageState extends State<EditStaffPage> {
     print("users/${currentUser}");
     final response = await CallApi().updateData(data,"users/${currentUser}");
     print(response.statusCode);
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text("Successfull"),
+      content: Text("Your data have been updated."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    AlertDialog alert2 = AlertDialog(
+      title: Text("Not Successfull"),
+      content: Text("Please fill the form first"),
+      actions: [
+        okButton,
+      ],
+    );
 
     if (response.statusCode == 200) {
       print ("is working");
-      
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
     }
 
     else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert2;
+        },
+      );
       throw Exception('Failed to load server');
+
     }
   }
 

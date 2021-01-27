@@ -5,6 +5,7 @@ import 'package:virque/Customers/userdashboard.dart';
 import 'package:virque/Staffs/staffdashboard.dart';
 import 'package:virque/request/requestpage.dart';
 
+import 'displayStat.dart';
 import 'manageCounter.dart';
 
 
@@ -54,32 +55,6 @@ class homeScreenStaffState extends State<HomeScreenStaff> {
       ),
     );
 
-    final buttonDisplay = Padding(
-
-      padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
-      child: ButtonTheme(
-        height: 56,
-        child: RaisedButton(
-            child: Text('Manage', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
-            color: Colors.black,
-
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50)
-            ),
-            onPressed: () => {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context){
-                        return RegisterPage();
-                      }
-                  )
-              )
-            }
-        ),
-      ),
-    );
-
     final buttonStat = Padding(
 
       padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
@@ -96,7 +71,7 @@ class homeScreenStaffState extends State<HomeScreenStaff> {
                   context,
                   MaterialPageRoute(
                       builder: (context){
-                        return RegisterPage();
+                        return displayVisitorStatPage();
                       }
                   )
               )
@@ -105,30 +80,6 @@ class homeScreenStaffState extends State<HomeScreenStaff> {
       ),
     );
 
-    final buttonNoti = Padding(
-      padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
-      child: ButtonTheme(
-        height: 56,
-        child: RaisedButton(
-            child: Text('Notification', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
-            color: Colors.black,
-
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50)
-            ),
-            onPressed: () => {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context){
-                        return RegisterPage();
-                      }
-                  )
-              )
-            }
-        ),
-      ),
-    );
 
     return SafeArea(
       child: Scaffold(
@@ -195,9 +146,8 @@ class homeScreenStaffState extends State<HomeScreenStaff> {
 
 
                 buttonRequest,
-                buttonDisplay,
                 buttonStat,
-                buttonNoti
+
 
 
 

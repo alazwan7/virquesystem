@@ -97,21 +97,21 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    pr = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
-    pr.style(
-        message: 'Successfull created!!',
-        borderRadius: 10.0,
-        backgroundColor: Colors.white,
-        progressWidget: LoadingScreen(),
-        elevation: 20.0,
-        insetAnimCurve: Curves.elasticOut,
-        progress: 0.0,
-        maxProgress: 100.0,
-        progressTextStyle: TextStyle(
-            color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400,fontFamily: "Muli"),
-        messageTextStyle: TextStyle(
-            color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600, fontFamily: "Muli")
-    );
+//    pr = ProgressDialog(context,type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
+//    pr.style(
+//        message: 'Successfull created!!',
+//        borderRadius: 10.0,
+//        backgroundColor: Colors.white,
+//        progressWidget: LoadingScreen(),
+//        elevation: 20.0,
+//        insetAnimCurve: Curves.elasticOut,
+//        progress: 0.0,
+//        maxProgress: 100.0,
+//        progressTextStyle: TextStyle(
+//            color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400,fontFamily: "Muli"),
+//        messageTextStyle: TextStyle(
+//            color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600, fontFamily: "Muli")
+//    );
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -346,10 +346,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         textColor: Colors.white,
                           onPressed: dataFilled==true ? () async{
                             setState(() {
-                              _isLoading = true;
+
                               if (_registerFormKey.currentState.validate()) {
 
-                                  pr.show();
 
                                   futureUsers = createUsers(
                                       nameController.text,
@@ -404,16 +403,49 @@ class _RegisterPageState extends State<RegisterPage> {
     };
     var response  = await CallApi().postData(data,"users");
     print(response.statusCode);
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+        Navigator.push(context,
+            new MaterialPageRoute(builder: (context) => new LoginCustomerPage())
+        );
+      },
+    );
 
+    AlertDialog alert = AlertDialog(
+      title: Text("Successfull"),
+      content: Text("Your data have been updated."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    AlertDialog alert2 = AlertDialog(
+      title: Text("Not Successfull"),
+      content: Text("Please fill the form first"),
+      actions: [
+        okButton,
+      ],
+    );
 
     if (response.statusCode == 201) {
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => LoginCustomerPage()),
+//    pr.show();
+      print("workingggg");
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
       );
-      print("workingggg") ; } else {
+      } else {
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert2;
+        },
+      );
       throw Exception('Failed to create User');
     }
   }

@@ -179,7 +179,7 @@ class _LoginStaffPageState extends State<LoginStaffPage> {
 
   Future<Users> createLoginState(String email, password) async {
     final http.Response response = await http.post(
-        'http://172.20.10.2:8000/api/login/',
+        'https://virqueue.herokuapp.com/api/login',
 
         headers: <String, String>{
           'Accept': 'application/json',

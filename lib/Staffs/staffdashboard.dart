@@ -68,19 +68,6 @@ class StaffDashBoardState extends State<StaffDashBoard> {
                 )
               }),
 
-              CustomListTile(Icons.notifications, 'Notification', ()=>{
-                Navigator.pop(ctxt),
-                Navigator.push(ctxt,
-                    new MaterialPageRoute(builder: (ctxt) => new WelcomePage())
-                )
-              }),
-
-              CustomListTile(Icons.feedback_rounded, 'feedback', ()=>{
-                Navigator.pop(ctxt),
-                Navigator.push(ctxt,
-                    new MaterialPageRoute(builder: (ctxt) => new WelcomePage())
-                )
-              }),
 
               CustomListTile(Icons.logout, 'Log Out', () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -11,13 +11,13 @@ import 'package:virque/request/requirementRequest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class displayStatPage extends StatefulWidget {
+class displayVisitorStatPage extends StatefulWidget {
   @override
-  displayStatPageState createState() => displayStatPageState();
+  displayVisitorStatPageState createState() => displayVisitorStatPageState();
 }
 
 // ignore: camel_case_types
-class displayStatPageState extends State<displayStatPage> {
+class displayVisitorStatPageState extends State<displayVisitorStatPage> {
   Future<Request> futureRequestNo;
 
   var currentUser;
@@ -30,8 +30,7 @@ class displayStatPageState extends State<displayStatPage> {
   void initState() {
     super.initState();
     users();
-   fetchhomeQueueRequestNo();
-
+    fetchhomeQueueRequestNo();
 
   }
 
@@ -105,7 +104,7 @@ class displayStatPageState extends State<displayStatPage> {
 //                                    },
 //                                  ),
 
-                                      Text("No of customer who request:", style: TextStyle(
+                                      Text("No of customer in Queue:", style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20,
                                           fontFamily: '')),
@@ -128,7 +127,26 @@ class displayStatPageState extends State<displayStatPage> {
                         ),
                       ),
 
+                      Container(
+                        decoration: new BoxDecoration(
+                            color: Colors.blueGrey.withOpacity(0.25),
+                            borderRadius: new BorderRadius.only(
+                              topLeft: const Radius.circular(10.0),
+                              topRight: const Radius.circular(10.0),
+                              bottomLeft: const Radius.circular(10.0),
+                              bottomRight: const Radius.circular(10.0),
+                            )
+                        ),
+                        child: FlatButton(
+                          child: Text("Clear Request", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: '')),
+                          onPressed: () async {
+                            futureRequestNo =
+                                clearRequests();
 
+
+                          },
+                        ),
+                      ),
                     ],
                   )
               ),
@@ -166,6 +184,7 @@ class displayStatPageState extends State<displayStatPage> {
 
   Future<Request> fetchhomeQueueRequestNo() async {
     var response = await CallApi().getData("requests");
+    print(response.statusCode);
     if (response.statusCode == 200) {
 
       Request request;
@@ -175,11 +194,8 @@ class displayStatPageState extends State<displayStatPage> {
       int count = values.length;
 
       setState(() {
-
 //        requestedUser = Request.fromJson(values);
         requestno = count;
-
-
 
       },
       );
@@ -196,6 +212,47 @@ class displayStatPageState extends State<displayStatPage> {
 
   }
 
+  Future<Request> clearRequests() async {
+    var response = await CallApi().deleteData("requests");
+
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("Successfull"),
+      content: Text("All request successfull cleared"),
+      actions: [
+        okButton,
+      ],
+    );
+
+
+    AlertDialog alert2 = AlertDialog(
+      title: Text("Not to Submit"),
+      content: Text("Please fill the requirement and get distance first"),
+      actions: [
+        okButton,
+      ],
+    );
+    if (response.statusCode == 200) {
+      print("workingggg") ;
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+
+    } else {
+      // If the server did not return a "200 OK response",
+      // then throw an exception.
+      throw Exception('Failed to delete Request List.');
+    }
+  }
 //
 //  Future<Request> fetchwalkInRequestNo() async {
 //    var response = await CallApi().getData("requests/walkinqueue");

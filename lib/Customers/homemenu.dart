@@ -84,7 +84,7 @@ class homeScreenState extends State<HomeScreen> {
         child: ButtonTheme(
           height: 56,
           child: RaisedButton(
-              child: Text('Visitor Stat Today', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
+              child: Text('Total Request Today', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
               color: Colors.black,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)
@@ -95,31 +95,6 @@ class homeScreenState extends State<HomeScreen> {
                     MaterialPageRoute(
                         builder: (context){
                           return displayStatPage();
-                        }
-                    )
-                )
-              }
-          ),
-        ),
-      );
-
-      final buttonNoti = Padding(
-        padding: EdgeInsets.only(bottom: 20, left: 20, right: 20),
-        child: ButtonTheme(
-          height: 56,
-          child: RaisedButton(
-              child: Text('Notification', style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: '')),
-              color: Colors.black,
-
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50)
-              ),
-              onPressed: () => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context){
-                          return RegisterPage();
                         }
                     )
                 )
@@ -195,7 +170,7 @@ class homeScreenState extends State<HomeScreen> {
                 buttonRequest,
                 buttonDisplay,
                 buttonStat,
-                buttonNoti
+
 
 
 

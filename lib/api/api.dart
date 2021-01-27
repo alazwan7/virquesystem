@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CallApi{
 
-  final String _url = 'http://172.20.10.2:8000/api/';
+  final String _url = 'https://virqueue.herokuapp.com/api/';
 
 
 
@@ -43,6 +43,15 @@ class CallApi{
     );
   }
 
+  deleteData(apiUrl) async {
+    var fullUrl = _url + apiUrl ;
+    print(fullUrl);
+
+    return await http.delete(
+        fullUrl,
+        headers: _setHeaders()
+    );
+  }
 
 
 
